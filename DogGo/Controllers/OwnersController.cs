@@ -168,6 +168,7 @@ namespace DogGo.Controllers
         new Claim(ClaimTypes.NameIdentifier, owner.Id.ToString()),
         new Claim(ClaimTypes.Email, owner.Email),
         new Claim(ClaimTypes.Role, "DogOwner"),
+        new Claim(ClaimTypes.Name, owner.Name)
     };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(
@@ -178,6 +179,11 @@ namespace DogGo.Controllers
                 new ClaimsPrincipal(claimsIdentity));
 
             return RedirectToAction("Index", "Dogs");
+        }
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
